@@ -1,5 +1,7 @@
 # <%= projectName %>
 
+<%= projectDescription %>
+
 ## Development
 
 For development environment consistency, a `Docker` environment has been created.  To access this environment you can use `docker-compose` commands to spin the environment up or down.  The required commands have been consolidated into the following shell scripts.  To start an environment run:
