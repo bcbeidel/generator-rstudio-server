@@ -1,5 +1,5 @@
 # Dockerfile
-FROM <%= baseImage %>:<%= rVersion >
+FROM <%= baseImage %>:<%= rVersion %>
 
 # Set Environment Variables
 ENV PROJECT_NAME <%= projectName %>
@@ -11,7 +11,7 @@ LABEL author="Brandon Beidel" \
 WORKDIR /home/rstudio/<%= projectName %>
 
 # Set base repos to `rvcran` and CRAN
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com')"
+RUN R -e "options(repos = c(CRAN = 'https://cloud.r-project.org'))"
 
 # If installed, deactivate `renv`.  This prevents issue with the shim for `install.packages()`
 RUN Rscript - e "if('renv' %in% rownames(installed.packages()) == TRUE) {renv::deactivate()}"

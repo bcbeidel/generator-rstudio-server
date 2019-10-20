@@ -5,11 +5,23 @@ const yosay = require('yosay');
 const path = require('path')
 
 var projectName = '';
-var baseImage = 'rocker/tidyverse:3.6.0'
+var rVersion = '';
+var baseImage = '';
+
 var DOCKERIGNORE_NAME = '.dockerignore';
 var DOCKERFILE_NAME = 'Dockerfile';
-var DOCKERFILE_TEMPLATE = 'Dockerfile.template'
+var DOCKERFILE_TEMPLATE_NAME = 'Dockerfile'
 var DOCKERCOMPOSE_NAME = 'docker-compose.yml';
+var DOCKERCOMPOSE_TEMPLATE_NAME = 'dockerfile-compose.yml';
+
+var RENVLOCK_NAME = "renv.lock"
+var RENVLOCK_TEMPLATE_NAME = "renv.lock"
+
+var RPROFILE_NAME = ".Rprofile"
+var RPROFILE_TEMPLATE_NAME = ".Rprofile"
+
+var README_NAME = "README.md"
+var README_TEMPLATE_NAME = "README.md"
 
 module.exports = class extends Generator {
   async prompting() {
@@ -26,6 +38,11 @@ module.exports = class extends Generator {
             message : 'What base image would you like to use?',
             choices: [
               {
+                name: 'rocker/tidyverse',
+                value: 'rocker/tidyverse',
+                default: true
+              },
+              {
                 name: 'rocker/rstudio',
                 value: 'rocker/rstudio',
               },
@@ -33,11 +50,7 @@ module.exports = class extends Generator {
                 name: 'rocker/rstudio-stable',
                 value: 'rocker/rstudio-stable',
               },
-              {
-                name: 'rocker/tidyverse',
-                value: 'rocker/tidyverse',
-                default: true
-              },
+  
             ]
         },
         {
@@ -52,10 +65,7 @@ module.exports = class extends Generator {
               }, {
                 name: '3.5.3',
                 value: '3.5.3'
-              }, {
-                name: '3.5.2',
-                value: '3.5.2'
-              },
+              }
             ]
         },
     ]);
@@ -71,5 +81,42 @@ module.exports = class extends Generator {
         rVersion: this.answers.rVersion
       }
     );
+
+    this.fs.copyTpl(
+      this.templatePath(DOCKERCOMPOSE_TEMPLATE_NAME),
+      this.destinationPath(DOCKERCOMPOSE_NAME),
+      {
+        projectName: this.answers.projectName
+      }
+    );
+
+    this.fs.copyTpl(
+        this.templatePath(DOCKERCOMPOSE_TEMPLATE_NAME),
+        this.destinationPath(DOCKERCOMPOSE_NAME),
+        {
+          projectName: this.answers.projectName
+        }
+      );
+
+      this.fs.copyTpl(
+        this.templatePath(RENVLOCK_TEMPLATE_NAME),
+        this.destinationPath(RENVLOCK_NAME),
+        {
+            rVersion: this.answers.rVersion
+        }
+      );
+
+      this.fs.copy(
+        this.templatePath(RPROFILE_NAME),
+        this.destinationPath(RPROFILE_NAME),
+      );
+
+      this.fs.copyTpl(
+        this.templatePath(README_TEMPLATE_NAME),
+        this.destinationPath(README_TEMPLATE_NAME),
+        {
+            projectName: this.answers.projectName
+        }
+      );
   }
 };
