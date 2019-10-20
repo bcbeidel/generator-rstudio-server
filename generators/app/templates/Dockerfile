@@ -4,7 +4,7 @@ FROM <%= baseImage %>:<%= rVersion %>
 # Set Environment Variables
 ENV PROJECT_NAME <%= projectName %>
 
-LABEL author="Brandon Beidel" \
+LABEL author="<%= authorName %> (<%= authorEmail %>)" \
       title="<%= projectName %>" \
       description="Development Environment For <%= projectName %> Project" 
 

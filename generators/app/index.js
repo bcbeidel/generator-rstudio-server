@@ -4,13 +4,17 @@ const chalk = require('chalk');
 const yosay = require('yosay');
 const path = require('path')
 
-var projectName = '';
-var rVersion = '';
-var baseImage = '';
+// var authorName = '';
+// var authorEmail = '';
+// var projectName = '';
+// var rVersion = '';
+// var baseImage = '';
 
 var DOCKERIGNORE_NAME = '.dockerignore';
+
 var DOCKERFILE_NAME = 'Dockerfile';
 var DOCKERFILE_TEMPLATE_NAME = 'Dockerfile'
+
 var DOCKERCOMPOSE_NAME = 'docker-compose.yml';
 var DOCKERCOMPOSE_TEMPLATE_NAME = 'dockerfile-compose.yml';
 
@@ -26,6 +30,16 @@ var README_TEMPLATE_NAME = "README.md"
 module.exports = class extends Generator {
   async prompting() {
     this.answers = await this.prompt([
+        {
+            type: 'input',
+            name: 'authorName',
+            message: 'What is your name?'
+        },
+        {
+            type: 'input',
+            name: 'authorEmail',
+            message: 'What is your email?'
+        },
         {
             type: 'input',
             name: 'projectName',
@@ -72,13 +86,24 @@ module.exports = class extends Generator {
   }
 
   writing() {
+
+    this.fs.copyTpl(
+        this.templatePath(README_TEMPLATE_NAME),
+        this.destinationPath(README_TEMPLATE_NAME),
+        {
+            projectName: this.answers.projectName
+        }
+    );
+
     this.fs.copyTpl(
       this.templatePath(DOCKERFILE_TEMPLATE_NAME),
       this.destinationPath(DOCKERFILE_NAME),
       {
         projectName: this.answers.projectName,
         baseImage: this.answers.baseImage,
-        rVersion: this.answers.rVersion
+        rVersion: this.answers.rVersion,
+        authorName: this.answers.authorName,
+        authorEmail: this.answers.authorEmail
       }
     );
 
@@ -111,12 +136,5 @@ module.exports = class extends Generator {
         this.destinationPath(RPROFILE_NAME),
       );
 
-      this.fs.copyTpl(
-        this.templatePath(README_TEMPLATE_NAME),
-        this.destinationPath(README_TEMPLATE_NAME),
-        {
-            projectName: this.answers.projectName
-        }
-      );
   }
 };
