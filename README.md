@@ -8,7 +8,7 @@ Creates a set of files that allow for RStudio development within a local Docker 
 2. Install `generator-rstudio-server` from source
     ```bash
     npm install -g yo 
-    npm install -g git+ssh://git@github.com/bcbeidel/generator-rstudio-server
+    npm install -g https://github.com/bcbeidel/generator-rstudio-server
     ```
 3. Then within your project folder, generate your new project:
     ```bash
