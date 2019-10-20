@@ -9,6 +9,7 @@ LABEL author="<%= authorName %> (<%= authorEmail %>)" \
       description="Development Environment For <%= projectName %> Project" 
 
 WORKDIR /home/rstudio/<%= projectName %>
+RUN Rscript -e 'setwd("/home/rstudio/<%= projectName %>")'
 
 # Set base repos to `rvcran` and CRAN
 RUN R -e "options(repos = c(CRAN = 'https://cloud.r-project.org'))"
@@ -21,7 +22,9 @@ RUN Rscript -e 'install.packages("remotes"); library(remotes);'
 RUN Rscript -e 'remotes::install_github("rstudio/renv"); library(renv)'
 
 COPY ./renv.lock .
+
 RUN Rscript -e 'renv::consent(provided = TRUE)'
 RUN Rscript -e 'renv::hydrate()'
+RUN Rscript -e 'renv::restore()'  
 
 CMD ["/init"]
