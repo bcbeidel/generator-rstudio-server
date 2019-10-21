@@ -44,3 +44,4 @@ It is assumed that you have the following software(s) installed and availible:
 - [docker | https://docs.docker.com/](https://docs.docker.com/)
 - [docker-compose | A tool for defining and running multi-container Docker applications](https://docs.docker.com/compose/)
 - [The Rocker Project | Docker Containers for the R Environment](https://www.rocker-project.org/)
+- [renv | The renv package helps you create reproducible environments for your R projects](https://rstudio.github.io/renv/)
