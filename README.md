@@ -7,7 +7,7 @@ Scaffolds a `Docker` environment for RStudio Development
 It is assumed that you have the following software(s) installed and availible:
 
 - [Node.js | Asynchronous event-driven JavaScript runtime](https://nodejs.org/en/)
-- [npm | Node.js Package Manager)](https://www.npmjs.com/get-npm)
+- [npm | Node.js Package Manager](https://www.npmjs.com/get-npm)
 
 ### Installation and Usage
 
